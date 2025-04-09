@@ -1,25 +1,29 @@
 package com.coded.spring.ordering.domain.entities
 
-import jakarta.inject.Named
+import com.coded.spring.ordering.domain.dtos.OrderResponseSummary
 import jakarta.persistence.*
-import org.springframework.data.jpa.repository.JpaRepository
 
-@Named
-interface OrderRepository: JpaRepository<Order, Long>
 
 @Entity
 @Table(name = "orders")
-data class Order(
+class Order(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     val id: Long? = null,
 
-    @Column(name="username", nullable = false)
-    val user: String,
-    val restaurant: String,
+    @ManyToOne(fetch = FetchType.EAGER, cascade = [CascadeType.DETACH])
+    @JoinColumn(name="user_id")
+    val user: User?,
 
-    @OneToMany(mappedBy = "order", cascade = [CascadeType.DETACH], fetch = FetchType.EAGER)
-    val items: List<OrderItem>
+    @ManyToOne(fetch = FetchType.EAGER, cascade = [CascadeType.DETACH])
+    @JoinColumn(name="restaurant_id")
+    val restaurant: Restaurant?,
+
+
+    @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+    val orderItems: List<OrderItem>? = null
 ) {
-    constructor(): this(null, "", "", emptyList())
+    constructor():  this(null, null, null)
+
 }

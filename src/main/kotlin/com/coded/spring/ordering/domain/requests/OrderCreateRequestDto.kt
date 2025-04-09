@@ -1,4 +1,4 @@
-package com.coded.spring.ordering.domain.dtos
+package com.coded.spring.ordering.domain.requests
 
 data class OrderCreateRequestDto(
     val user: String,
