@@ -1,36 +1,39 @@
 package com.coded.spring.ordering.controllers
 
-import com.coded.spring.ordering.domain.dtos.OrderCreateRequestDto
-import com.coded.spring.ordering.domain.dtos.OrderDto
-import com.coded.spring.ordering.domain.entities.Order
-import com.coded.spring.ordering.domain.entities.OrderItemRepository
-import com.coded.spring.ordering.domain.entities.OrderRepository
-import com.coded.spring.ordering.domain.toDto
-import com.coded.spring.ordering.domain.toEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import com.coded.spring.ordering.domain.requests.OrderCreateRequestDto
+import com.coded.spring.ordering.domain.requests.toCreateDto
+import com.coded.spring.ordering.services.OrderService
+import com.coded.spring.ordering.services.RestaurantService
+import com.coded.spring.ordering.services.UserService
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 
 @RestController
 @RequestMapping("/api/v1/orders")
 class OrderApiController(
-    private val orderRepository: OrderRepository,
-    private val orderItemRepository: OrderItemRepository
+    private val orderService: OrderService,
+    private val userService: UserService,
+    private val restaurantService: RestaurantService,
 ){
-
     @GetMapping
-    fun getOrders(): List<OrderDto> = orderRepository.findAll().map { it.toDto() }
+    fun order() = ResponseEntity.ok(orderService.getAllOrders())
 
     @PostMapping
-    fun createOrder(@RequestBody orderCreateRequestDto: OrderCreateRequestDto): OrderDto {
-        val orderEntity = orderCreateRequestDto.toEntity()
-        val order = orderRepository.save(orderEntity)
-        val items = orderItemRepository.saveAll(orderEntity.items.map { it.copy(order = order) })
-
-        return order.copy(items = items).toDto()
+    fun create(@RequestBody newOrderDto: OrderCreateRequestDto): ResponseEntity<Any> {
+        println(newOrderDto)
+        val user = userService.findById(newOrderDto.userId)
+            ?: return ResponseEntity(HttpStatus.BAD_REQUEST)
+        val restaurant = restaurantService.findById(newOrderDto.restaurantId)
+            ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+        orderService.create(
+            newOrderDto.toCreateDto(
+                user,
+                restaurant,
+                newOrderDto.items.map { it.toCreateDto() }
+            )
+        )
+        return ResponseEntity(HttpStatus.OK)
     }
-
 }
