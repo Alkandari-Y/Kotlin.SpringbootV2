@@ -2,6 +2,7 @@ package com.coded.spring.ordering.domain.projections
 
 import com.coded.spring.ordering.domain.entities.Restaurant
 import com.coded.spring.ordering.domain.entities.User
+import java.math.BigDecimal
 
 data class ItemResponse(
     val id: Long,
@@ -34,6 +35,6 @@ interface OrderInfoProjection {
     interface MenuInfo {
         val id: Long
         val name: String
-        val price: Double
+        val price: BigDecimal
     }
 }
