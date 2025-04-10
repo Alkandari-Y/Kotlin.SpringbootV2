@@ -1,40 +1,39 @@
 package com.coded.spring.ordering.controllers
 
 import com.coded.spring.ordering.domain.requests.OrderCreateRequestDto
-import com.coded.spring.ordering.domain.dtos.OrderResponseSummary
-import com.coded.spring.ordering.domain.entities.*
-//import com.coded.spring.ordering.domain.toDto
+import com.coded.spring.ordering.domain.requests.toCreateDto
+import com.coded.spring.ordering.services.OrderService
+import com.coded.spring.ordering.services.RestaurantService
+import com.coded.spring.ordering.services.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 
 @RestController
 @RequestMapping("/api/v1/orders")
 class OrderApiController(
-
+    private val orderService: OrderService,
+    private val userService: UserService,
+    private val restaurantService: RestaurantService,
 ){
+    @GetMapping
+    fun order() = ResponseEntity.ok(orderService.getAllOrders())
 
-//    @GetMapping
-//    fun getOrders(): List<OrderResponseSummary> = orderRepository.findOrdersSummaries()
-//        .map { it.toDto() }
-
-//    @PostMapping
-//    fun createOrder(@RequestBody orderCreateRequestDto: OrderCreateRequestDto)
-//    : ResponseEntity<List<MenuItem>> {
-//        val customer = userRepository.findByUsername(orderCreateRequestDto.user)
-//        val restaurant = restaurantRepository.findByName(orderCreateRequestDto.restaurant)
-//        if (customer == null || restaurant == null) return ResponseEntity.badRequest().build()
-//        val items = menuItemRepository.findByNameIn(orderCreateRequestDto.items)
-//
-//        val order = orderRepository.save(Order(restaurant = restaurant, user = customer))
-//        orderItemRepository.saveAll(orderCreateRequestDto.items.map { OrderItem(name=it, order=order) })
-//
-//        return ResponseEntity(items, HttpStatus.OK)
-//    }
-
+    @PostMapping
+    fun create(@RequestBody newOrderDto: OrderCreateRequestDto): ResponseEntity<Any> {
+        println(newOrderDto)
+        val user = userService.findById(newOrderDto.userId)
+            ?: return ResponseEntity(HttpStatus.BAD_REQUEST)
+        val restaurant = restaurantService.findById(newOrderDto.restaurantId)
+            ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+        orderService.create(
+            newOrderDto.toCreateDto(
+                user,
+                restaurant,
+                newOrderDto.items.map { it.toCreateDto() }
+            )
+        )
+        return ResponseEntity(HttpStatus.OK)
+    }
 }

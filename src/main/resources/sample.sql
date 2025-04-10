@@ -19,23 +19,23 @@ VALUES
 
 SELECT * FROM public.restaurants;
 
-INSERT INTO public.menu_items (name, restaurant_id)
+INSERT INTO public.menus (name, restaurant_id, price)
 VALUES
-    ('noodles', 1),
-    ('ramen', 1),
-    ('burgers', 2);
+    ('noodles', 3, 5.5),
+    ('ramen', 1, 6.9),
+    ('burgers', 2, 3.5);
 
-SELECT * FROM public.menu_items;
+SELECT * FROM public.menus;
 
 INSERT INTO public.orders (user_id, restaurant_id)
 VALUES
     (1, 1),
-    (1, 2);
+    (1, 3);
 
 SELECT * FROM public.orders;
 
 
-INSERT INTO public.orders_items (menu_item_id, order_id, quantity)
+INSERT INTO public.orders_items (menu_id, order_id, quantity)
 VALUES
     (1, 1, 3),
     (2, 2, 5),

@@ -1,26 +1,31 @@
 package com.coded.spring.ordering.controllers
 
-import com.coded.spring.ordering.domain.requests.MenuItemCreateRequestDto
-import com.coded.spring.ordering.domain.entities.MenuItem
-import com.coded.spring.ordering.services.MenuItemService
+import com.coded.spring.ordering.domain.entities.Menu
+import com.coded.spring.ordering.domain.entities.Restaurant
+import com.coded.spring.ordering.domain.requests.MenuCreateRequestDto
+import com.coded.spring.ordering.domain.requests.toEntity
+import com.coded.spring.ordering.repositories.MenuRepository
 import com.coded.spring.ordering.services.RestaurantService
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1/menus")
 class MenuApiController(
-
+    private val menuRepository: MenuRepository,
+    private val restaurantService: RestaurantService
 ) {
-//    @GetMapping
-//    fun getMenus() = menuItemRepository.findAll()
-//
-//    @PostMapping
-//    fun addToMenu(@RequestBody menuItem: MenuItemCreateRequestDto): ResponseEntity<MenuItem> {
-//        val restaurant = restaurantRepository.findByName(menuItem.restaurantName)
-//            ?: return ResponseEntity.badRequest().build()
-//
-//        val savedMenuItem = menuItemRepository.save(MenuItem(name = menuItem.name, restaurant = restaurant))
-//        return ResponseEntity.ok(savedMenuItem)
-//    }
+    @GetMapping
+    fun getAll(): ResponseEntity<List<Menu>> = ResponseEntity.ok(menuRepository.findAll())
+
+    @PostMapping
+    fun create(
+        @RequestBody menuCreateRequestDto: MenuCreateRequestDto
+    ): ResponseEntity<Menu> {
+        val restaurant: Restaurant = restaurantService.findById(menuCreateRequestDto.restaurantId)
+            ?: return ResponseEntity.badRequest().build()
+        val newMenu = menuRepository.save(menuCreateRequestDto.toEntity(restaurant))
+        return ResponseEntity(newMenu, HttpStatus.CREATED)
+    }
 }

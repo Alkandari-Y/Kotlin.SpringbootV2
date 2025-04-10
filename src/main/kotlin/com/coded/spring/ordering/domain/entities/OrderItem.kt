@@ -10,8 +10,8 @@ class OrderItem(
     val id: Long? = null,
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = [CascadeType.DETACH])
-    @JoinColumn(name = "menu_item_id")
-    val menuItem: MenuItem? = null,
+    @JoinColumn(name = "menu_id")
+    val item: Menu? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")

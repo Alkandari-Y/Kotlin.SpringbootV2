@@ -1,8 +1,6 @@
 package com.coded.spring.ordering.domain.entities
 
-import com.coded.spring.ordering.domain.dtos.OrderResponseSummary
 import jakarta.persistence.*
-
 
 @Entity
 @Table(name = "orders")

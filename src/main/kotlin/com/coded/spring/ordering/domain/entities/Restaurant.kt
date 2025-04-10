@@ -13,8 +13,6 @@ class Restaurant(
     @Column(name="name", nullable = false)
     val name: String = "",
 
-    @OneToMany()
-    val menuItems: List<MenuItem>? = emptyList()
 ) {
-    constructor(): this(null, "", emptyList())
+    constructor(): this(null, "")
 }
