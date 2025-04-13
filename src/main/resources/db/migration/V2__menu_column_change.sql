@@ -8,14 +8,3 @@ ALTER TABLE public.users
     DEFAULT NULL;
 
 SELECT * FROM public.users;
-
-
-DO $FN$
-    BEGIN
-        FOR counter IN 1..100 LOOP
-            UPDATE public.users
-                SET email= 'someEmail' || counter || '@exmaple.com',  password='secretPassword123'
-                WHERE id = counter;
-        END LOOP;
-    END;
-$FN$

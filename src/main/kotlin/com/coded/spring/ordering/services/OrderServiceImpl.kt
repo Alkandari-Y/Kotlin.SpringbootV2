@@ -20,7 +20,7 @@ class OrderServiceImpl(
     private val orderItemRepository: OrderItemRepository,
     private val menuRepository: MenuRepository,
 ) : OrderService {
-    override fun findAll(): List<Order> = orderRepository.findAll()
+    override fun findAll(): List<OrderInfoProjection> = orderRepository.findAllProjectedBy()
 
     @Transactional
     override fun create(

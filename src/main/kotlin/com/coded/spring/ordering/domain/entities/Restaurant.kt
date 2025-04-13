@@ -1,5 +1,6 @@
 package com.coded.spring.ordering.domain.entities
 
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.*
 
 @Entity
@@ -13,6 +14,10 @@ class Restaurant(
     @Column(name="name", nullable = false)
     val name: String = "",
 
+    @OneToMany(mappedBy = "restaurant", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+    @JsonManagedReference
+    val menus: List<Menu>? = emptyList()
+
 ) {
-    constructor(): this(null, "")
+    constructor(): this(null, "", emptyList())
 }

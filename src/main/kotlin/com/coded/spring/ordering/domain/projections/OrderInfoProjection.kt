@@ -23,9 +23,15 @@ data class OrderInfoResponse(
 
 interface OrderInfoProjection {
     val id: Long
-    val user: User
+    val user: UserInfo
     val restaurant: Restaurant
     val orderItems: List<OrderItemInfo>
+
+    interface UserInfo {
+        val username: String
+        val email: String
+        val id: Long
+    }
 
     interface OrderItemInfo {
         val item: MenuInfo

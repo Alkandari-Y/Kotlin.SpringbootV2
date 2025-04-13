@@ -8,7 +8,7 @@ CREATE TABLE "users" (
 DROP TABLE IF EXISTS "restaurants";
 CREATE TABLE "restaurants" (
     "id"   SERIAL PRIMARY KEY ,
-    "name" VARCHAR(200)
+    "name" VARCHAR(200) UNIQUE
 );
 
 DROP TABLE IF EXISTS "menus";

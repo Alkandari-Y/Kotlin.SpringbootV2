@@ -1,10 +1,12 @@
 package com.coded.spring.ordering.controllers
 
+import com.coded.spring.ordering.domain.dtos.MenuDetailResponse
 import com.coded.spring.ordering.domain.entities.Menu
 import com.coded.spring.ordering.domain.entities.Restaurant
+import com.coded.spring.ordering.domain.projections.MenuInfoSearchProjection
 import com.coded.spring.ordering.domain.requests.MenuCreateRequestDto
 import com.coded.spring.ordering.domain.requests.toEntity
-import com.coded.spring.ordering.repositories.MenuRepository
+import com.coded.spring.ordering.services.MenuService
 import com.coded.spring.ordering.services.RestaurantService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -13,19 +15,37 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/v1/menus")
 class MenuApiController(
-    private val menuRepository: MenuRepository,
+    private val menuService: MenuService,
     private val restaurantService: RestaurantService
 ) {
     @GetMapping
-    fun getAll(): ResponseEntity<List<Menu>> = ResponseEntity.ok(menuRepository.findAll())
+    fun getAll(): ResponseEntity<List<Menu>> = ResponseEntity.ok(menuService.findAll())
 
     @PostMapping
-    fun create(
+    fun createMenu(
         @RequestBody menuCreateRequestDto: MenuCreateRequestDto
     ): ResponseEntity<Menu> {
         val restaurant: Restaurant = restaurantService.findById(menuCreateRequestDto.restaurantId)
             ?: return ResponseEntity.badRequest().build()
-        val newMenu = menuRepository.save(menuCreateRequestDto.toEntity(restaurant))
+        val newMenu = menuService.create(menuCreateRequestDto.toEntity(restaurant))
         return ResponseEntity(newMenu, HttpStatus.CREATED)
+    }
+
+    @GetMapping(path=["details/{menuId}"])
+    fun getMenu(@PathVariable("menuId") menuId: Long): ResponseEntity<MenuDetailResponse> {
+        val foundMenu = menuService.findById(menuId)
+            ?: return ResponseEntity.notFound().build()
+        return ResponseEntity(foundMenu, HttpStatus.OK)
+    }
+
+    @GetMapping(path=["/search"])
+    fun search(
+        @RequestParam("restName") restName: String?=null,
+        @RequestParam("menuName") foodName: String?=null
+    ): ResponseEntity<List<MenuInfoSearchProjection>> {
+        return ResponseEntity(
+            menuService.searchMenus(foodName, restName),
+            HttpStatus.OK
+        )
     }
 }

@@ -18,10 +18,10 @@ class OrderApiController(
     private val restaurantService: RestaurantService,
 ){
     @GetMapping
-    fun order() = ResponseEntity.ok(orderService.getAllOrders())
+    fun getAllOrders() = ResponseEntity.ok(orderService.getAllOrders())
 
     @PostMapping
-    fun create(@RequestBody newOrderDto: OrderCreateRequestDto): ResponseEntity<Any> {
+    fun createOrder(@RequestBody newOrderDto: OrderCreateRequestDto): ResponseEntity<Any> {
         println(newOrderDto)
         val user = userService.findById(newOrderDto.userId)
             ?: return ResponseEntity(HttpStatus.BAD_REQUEST)

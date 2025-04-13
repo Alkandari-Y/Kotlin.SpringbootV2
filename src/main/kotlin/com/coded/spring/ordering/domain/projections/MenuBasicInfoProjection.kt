@@ -7,3 +7,13 @@ interface MenuBasicInfoProjection {
     val id: Long
     val price: BigDecimal
 }
+
+interface MenuInfoSearchProjection : MenuBasicInfoProjection {
+//    val restaurant: RestaurantInfoProjection
+    val restaurant:RestaurantInfoProjection
+
+    interface RestaurantInfoProjection {
+        val id: Float
+        val name: String
+    }
+}
