@@ -10,7 +10,13 @@ import org.hibernate.validator.constraints.Length
 import org.jetbrains.annotations.NotNull
 
 data class OrderItemCreateRequestDto (
+    @field:NotBlank(message = "Item ID is required")
+    @field:NotNull
+    @field:Positive(message = "Item ID must be positive")
     val itemId: Long,
+    @field:NotBlank(message = "Amount is required")
+    @field:NotNull
+    @field:Positive(message = "Amount must be positive")
     val quantity: Int,
 )
 
