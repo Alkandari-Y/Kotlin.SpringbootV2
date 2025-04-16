@@ -9,7 +9,6 @@ interface MenuBasicInfoProjection {
 }
 
 interface MenuInfoSearchProjection : MenuBasicInfoProjection {
-//    val restaurant: RestaurantInfoProjection
     val restaurant:RestaurantInfoProjection
 
     interface RestaurantInfoProjection {

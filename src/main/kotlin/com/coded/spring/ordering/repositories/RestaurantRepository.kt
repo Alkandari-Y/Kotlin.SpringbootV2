@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface RestaurantRepository: JpaRepository<Restaurant, Long> {
-//    @Query("SELECT r FROM Restaurant r")
-//    fun allRestaurants(): List<RestaurantInfoProjection>
 
     fun findByName(name: String): Restaurant?
 

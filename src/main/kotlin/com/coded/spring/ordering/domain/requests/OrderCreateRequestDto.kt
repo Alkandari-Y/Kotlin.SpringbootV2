@@ -5,8 +5,6 @@ import com.coded.spring.ordering.domain.dtos.OrderItemCreateDto
 import com.coded.spring.ordering.domain.entities.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Positive
-import jakarta.validation.constraints.PositiveOrZero
-import org.hibernate.validator.constraints.Length
 import org.jetbrains.annotations.NotNull
 
 data class OrderItemCreateRequestDto (

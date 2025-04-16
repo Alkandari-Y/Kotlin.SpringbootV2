@@ -11,10 +11,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface MenuRepository: JpaRepository<Menu, Long> {
 
-//
-//    @Query("SELECT m FROM Menu m")
-//    fun getMenuById(id: Long): Menu?
-
     fun findByRestaurant_Id(restaurantId: Long): List<MenuBasicInfoProjection>
     fun findAllByIdIn(menuIds: List<Long>): List<Menu>
 

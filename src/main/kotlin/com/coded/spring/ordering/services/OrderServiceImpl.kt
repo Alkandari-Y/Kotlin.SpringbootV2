@@ -5,8 +5,6 @@ import com.coded.spring.ordering.domain.dtos.toEntity
 import com.coded.spring.ordering.domain.entities.Order
 import com.coded.spring.ordering.domain.entities.OrderItem
 import com.coded.spring.ordering.domain.projections.OrderInfoProjection
-import com.coded.spring.ordering.domain.projections.OrderInfoResponse
-import com.coded.spring.ordering.domain.projections.OrderItemResponse
 import com.coded.spring.ordering.repositories.MenuRepository
 import com.coded.spring.ordering.repositories.OrderItemRepository
 import com.coded.spring.ordering.repositories.OrderRepository
