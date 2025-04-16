@@ -1,16 +1,14 @@
 package com.coded.spring.ordering.domain.dtos
 
-import com.coded.spring.ordering.domain.entities.Order
-import com.coded.spring.ordering.domain.entities.Restaurant
-import com.coded.spring.ordering.domain.entities.User
+import com.coded.spring.ordering.domain.entities.*
 
 data class OrderCreateDto(
-    val user: User,
-    val restaurant: Restaurant,
+    val user: UserEntity,
+    val restaurant: RestaurantEntity,
     val items: List<OrderItemCreateDto>
 )
 
-fun OrderCreateDto.toEntity(): Order = Order(
+fun OrderCreateDto.toEntity(): OrderEntity = OrderEntity(
     user = user,
     restaurant = restaurant
 )

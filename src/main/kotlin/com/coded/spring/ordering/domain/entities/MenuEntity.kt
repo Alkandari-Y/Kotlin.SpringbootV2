@@ -6,7 +6,7 @@ import java.math.BigDecimal
 
 @Entity
 @Table(name = "menus")
-data class Menu(
+data class MenuEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
@@ -18,7 +18,7 @@ data class Menu(
     @ManyToOne(fetch = FetchType.EAGER, cascade = [CascadeType.DETACH])
     @JoinColumn(name="restaurant_id")
     @JsonBackReference
-    val restaurant: Restaurant? = null,
+    val restaurant: RestaurantEntity? = null,
 
     @Column(name="price", precision = 10, scale = 2, nullable = false)
     val price: BigDecimal = BigDecimal(0)

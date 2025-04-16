@@ -1,10 +1,10 @@
 package com.coded.spring.ordering.services
 
-import com.coded.spring.ordering.domain.entities.User
+import com.coded.spring.ordering.domain.entities.UserEntity
 
 
 interface UserService {
-    fun findAll(): List<User>
-    fun createUser(user: User): User
-    fun findById(id: Long): User?
+    fun findAll(): List<UserEntity>
+    fun createUser(user: UserEntity): UserEntity
+    fun findById(id: Long): UserEntity?
 }

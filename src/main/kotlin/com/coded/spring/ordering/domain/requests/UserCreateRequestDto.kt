@@ -1,6 +1,6 @@
 package com.coded.spring.ordering.domain.requests
 
-import com.coded.spring.ordering.domain.entities.User
+import com.coded.spring.ordering.domain.entities.UserEntity
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
@@ -29,7 +29,7 @@ data class UserCreateRequestDto(
     val password: String
 )
 
-fun UserCreateRequestDto.toEntity() = User(
+fun UserCreateRequestDto.toEntity() = UserEntity(
     name = name,
     username = username,
     email = email,

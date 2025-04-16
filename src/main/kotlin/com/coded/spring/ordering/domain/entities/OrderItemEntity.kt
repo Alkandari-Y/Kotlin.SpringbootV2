@@ -4,18 +4,18 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "orders_items")
-class OrderItem(
+class OrderItemEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = [CascadeType.DETACH])
     @JoinColumn(name = "menu_id")
-    val item: Menu? = null,
+    val item: MenuEntity? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-    val order: Order? = null,
+    val order: OrderEntity? = null,
 
     @Column(name = "quantity")
     val quantity: Int? = null

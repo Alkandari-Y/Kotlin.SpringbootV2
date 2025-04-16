@@ -1,7 +1,7 @@
 package com.coded.spring.ordering.domain.projections
 
-import com.coded.spring.ordering.domain.entities.Restaurant
-import com.coded.spring.ordering.domain.entities.User
+import com.coded.spring.ordering.domain.entities.RestaurantEntity
+import com.coded.spring.ordering.domain.entities.UserEntity
 import java.math.BigDecimal
 
 data class ItemResponse(
@@ -16,15 +16,15 @@ data class OrderItemResponse(
 
 data class OrderInfoResponse(
     val id: Long,
-    val user: User,
-    val restaurant: Restaurant,
+    val user: UserEntity,
+    val restaurant: RestaurantEntity,
     val items: List<OrderItemResponse>
 )
 
 interface OrderInfoProjection {
     val id: Long
     val user: UserInfo
-    val restaurant: Restaurant
+    val restaurant: RestaurantEntity
     val orderItems: List<OrderItemInfo>
 
     interface UserInfo {

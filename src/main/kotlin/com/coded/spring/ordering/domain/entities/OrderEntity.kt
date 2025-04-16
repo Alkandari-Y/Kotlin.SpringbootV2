@@ -4,7 +4,7 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "orders")
-class Order(
+class OrderEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
@@ -12,15 +12,15 @@ class Order(
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = [CascadeType.DETACH])
     @JoinColumn(name="user_id")
-    val user: User?,
+    val user: UserEntity?,
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = [CascadeType.DETACH])
     @JoinColumn(name="restaurant_id")
-    val restaurant: Restaurant?,
+    val restaurant: RestaurantEntity?,
 
 
     @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
-    val orderItems: List<OrderItem>? = null
+    val orderItems: List<OrderItemEntity>? = null
 ) {
     constructor():  this(null, null, null)
 

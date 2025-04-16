@@ -34,8 +34,8 @@ data class OrderCreateRequestDto(
 )
 
 fun OrderCreateRequestDto.toCreateDto(
-    user: User,
-    restaurant: Restaurant,
+    user: UserEntity,
+    restaurant: RestaurantEntity,
     items: List<OrderItemCreateDto>,
 ) =  OrderCreateDto(user=user, restaurant=restaurant, items=items)
 

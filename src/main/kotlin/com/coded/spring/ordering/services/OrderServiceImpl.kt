@@ -2,8 +2,8 @@ package com.coded.spring.ordering.services
 
 import com.coded.spring.ordering.domain.dtos.OrderCreateDto
 import com.coded.spring.ordering.domain.dtos.toEntity
-import com.coded.spring.ordering.domain.entities.Order
-import com.coded.spring.ordering.domain.entities.OrderItem
+import com.coded.spring.ordering.domain.entities.OrderEntity
+import com.coded.spring.ordering.domain.entities.OrderItemEntity
 import com.coded.spring.ordering.domain.projections.OrderInfoProjection
 import com.coded.spring.ordering.repositories.MenuRepository
 import com.coded.spring.ordering.repositories.OrderItemRepository
@@ -33,11 +33,11 @@ class OrderServiceImpl(
             throw IllegalStateException("Menus not found: $missingIds")
         }
 
-        val order: Order = orderRepository.save(newOrder.toEntity())
+        val order: OrderEntity = orderRepository.save(newOrder.toEntity())
         val orderItems = newOrder.items.map { itemDto ->
             val menu = foundMenus.find { menu -> menu.id == itemDto.itemId }
                 ?: throw IllegalStateException("Menu not found for id: ${itemDto.itemId}")
-            OrderItem(
+            OrderItemEntity(
                 item = menu,
                 order = order,
                 quantity = itemDto.quantity
@@ -46,6 +46,6 @@ class OrderServiceImpl(
         orderItemRepository.saveAll(orderItems)
     }
 
-    override fun findById(id: Long): Order? = orderRepository.findByIdOrNull(id)
+    override fun findById(id: Long): OrderEntity? = orderRepository.findByIdOrNull(id)
     override fun getAllOrders(): List<OrderInfoProjection> = orderRepository.findAllProjectedBy()
 }

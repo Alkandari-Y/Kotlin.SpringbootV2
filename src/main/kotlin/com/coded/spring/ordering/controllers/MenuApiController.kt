@@ -1,8 +1,8 @@
 package com.coded.spring.ordering.controllers
 
 import com.coded.spring.ordering.domain.dtos.MenuDetailResponse
-import com.coded.spring.ordering.domain.entities.Menu
-import com.coded.spring.ordering.domain.entities.Restaurant
+import com.coded.spring.ordering.domain.entities.MenuEntity
+import com.coded.spring.ordering.domain.entities.RestaurantEntity
 import com.coded.spring.ordering.domain.projections.MenuInfoSearchProjection
 import com.coded.spring.ordering.domain.requests.MenuCreateRequestDto
 import com.coded.spring.ordering.domain.requests.toEntity
@@ -19,13 +19,13 @@ class MenuApiController(
     private val restaurantService: RestaurantService
 ) {
     @GetMapping
-    fun getAll(): ResponseEntity<List<Menu>> = ResponseEntity.ok(menuService.findAll())
+    fun getAll(): ResponseEntity<List<MenuEntity>> = ResponseEntity.ok(menuService.findAll())
 
     @PostMapping
     fun createMenu(
         @RequestBody menuCreateRequestDto: MenuCreateRequestDto
-    ): ResponseEntity<Menu> {
-        val restaurant: Restaurant = restaurantService.findById(menuCreateRequestDto.restaurantId)
+    ): ResponseEntity<MenuEntity> {
+        val restaurant: RestaurantEntity = restaurantService.findById(menuCreateRequestDto.restaurantId)
             ?: return ResponseEntity.badRequest().build()
         val newMenu = menuService.create(menuCreateRequestDto.toEntity(restaurant))
         return ResponseEntity(newMenu, HttpStatus.CREATED)

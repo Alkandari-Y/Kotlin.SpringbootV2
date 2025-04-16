@@ -5,7 +5,7 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "restaurants")
-class Restaurant(
+class RestaurantEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
@@ -16,7 +16,7 @@ class Restaurant(
 
     @OneToMany(mappedBy = "restaurant", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     @JsonManagedReference
-    val menus: List<Menu>? = emptyList()
+    val menus: List<MenuEntity>? = emptyList()
 
 ) {
     constructor(): this(null, "", emptyList())

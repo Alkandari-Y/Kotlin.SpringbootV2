@@ -1,6 +1,6 @@
 package com.coded.spring.ordering.domain.dtos
 
-import com.coded.spring.ordering.domain.entities.User
+import com.coded.spring.ordering.domain.entities.UserEntity
 
 
 data class UserResponseDto(
@@ -10,7 +10,7 @@ data class UserResponseDto(
     val name: String
 )
 
-fun User.toDto() = UserResponseDto(
+fun UserEntity.toDto() = UserResponseDto(
     id = id!!,
     email = email,
     username = username,

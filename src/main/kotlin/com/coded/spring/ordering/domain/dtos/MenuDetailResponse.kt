@@ -1,6 +1,6 @@
 package com.coded.spring.ordering.domain.dtos
 
-import com.coded.spring.ordering.domain.entities.Menu
+import com.coded.spring.ordering.domain.entities.MenuEntity
 import java.math.BigDecimal
 
 data class MenuDetailResponse (
@@ -10,7 +10,7 @@ data class MenuDetailResponse (
     val restaurant: RestaurantInfoResponse,
 )
 
-fun Menu.toResponse() = MenuDetailResponse(
+fun MenuEntity.toResponse() = MenuDetailResponse(
     id = id!!,
     name = name,
     price = price,

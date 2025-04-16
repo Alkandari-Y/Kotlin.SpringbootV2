@@ -1,7 +1,8 @@
 package com.coded.spring.ordering.domain.requests
 
-import com.coded.spring.ordering.domain.entities.Menu
-import com.coded.spring.ordering.domain.entities.Restaurant
+
+import com.coded.spring.ordering.domain.entities.MenuEntity
+import com.coded.spring.ordering.domain.entities.RestaurantEntity
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Positive
 import org.hibernate.validator.constraints.Length
@@ -20,7 +21,7 @@ data class MenuCreateRequestDto(
     val price: BigDecimal,
 )
 
-fun MenuCreateRequestDto.toEntity(restaurant: Restaurant): Menu = Menu(
+fun MenuCreateRequestDto.toEntity(restaurant: RestaurantEntity): MenuEntity = MenuEntity(
     name=name,
     restaurant=restaurant,
     price=price
