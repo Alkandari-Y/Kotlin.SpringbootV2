@@ -1,7 +1,7 @@
 package com.coded.spring.ordering.services
 
 import com.coded.spring.ordering.domain.dtos.OrderCreateDto
-import com.coded.spring.ordering.domain.dtos.toEntity
+import com.coded.spring.ordering.domain.dtos.toOrderEntity
 import com.coded.spring.ordering.domain.entities.OrderEntity
 import com.coded.spring.ordering.domain.entities.OrderItemEntity
 import com.coded.spring.ordering.domain.projections.OrderInfoProjection
@@ -33,7 +33,7 @@ class OrderServiceImpl(
             throw IllegalStateException("Menus not found: $missingIds")
         }
 
-        val order: OrderEntity = orderRepository.save(newOrder.toEntity())
+        val order: OrderEntity = orderRepository.save(newOrder.toOrderEntity())
         val orderItems = newOrder.items.map { itemDto ->
             val menu = foundMenus.find { menu -> menu.id == itemDto.itemId }
                 ?: throw IllegalStateException("Menu not found for id: ${itemDto.itemId}")

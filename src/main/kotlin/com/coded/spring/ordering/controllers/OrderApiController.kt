@@ -5,6 +5,7 @@ import com.coded.spring.ordering.domain.requests.toCreateDto
 import com.coded.spring.ordering.services.OrderService
 import com.coded.spring.ordering.services.RestaurantService
 import com.coded.spring.ordering.services.UserService
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -21,7 +22,7 @@ class OrderApiController(
     fun getAllOrders() = ResponseEntity.ok(orderService.getAllOrders())
 
     @PostMapping
-    fun createOrder(@RequestBody newOrderDto: OrderCreateRequestDto): ResponseEntity<Any> {
+    fun createOrder(@Valid @RequestBody newOrderDto: OrderCreateRequestDto): ResponseEntity<Any> {
         println(newOrderDto)
         val user = userService.findById(newOrderDto.userId)
             ?: return ResponseEntity(HttpStatus.BAD_REQUEST)

@@ -8,7 +8,7 @@ data class OrderCreateDto(
     val items: List<OrderItemCreateDto>
 )
 
-fun OrderCreateDto.toEntity(): OrderEntity = OrderEntity(
+fun OrderCreateDto.toOrderEntity(): OrderEntity = OrderEntity(
     user = user,
     restaurant = restaurant
 )
