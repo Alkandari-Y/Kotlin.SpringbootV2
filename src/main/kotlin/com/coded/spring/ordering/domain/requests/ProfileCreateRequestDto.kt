@@ -1,10 +1,7 @@
 package com.coded.spring.ordering.domain.requests
 
 import com.coded.spring.ordering.domain.entities.ProfileEntity
-import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.NotNull
-import jakarta.validation.constraints.Pattern
-import jakarta.validation.constraints.Size
+import jakarta.validation.constraints.*
 
 data class ProfileCreateRequestDto(
     @field:NotBlank
@@ -23,6 +20,7 @@ data class ProfileCreateRequestDto(
     val phoneNumber: String,
 
     @field:NotNull
+    @field:Positive(message = "User ID must be positive")
     val userId: Long
 )
 

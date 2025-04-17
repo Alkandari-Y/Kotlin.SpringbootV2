@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull
 
 data class RestaurantCreateRequestDto(
     @field:NotBlank(message = "Name is required")
-    @field:NotNull
     @field:Length(min = 3, message = "Name is too short")
     val name: String
 )

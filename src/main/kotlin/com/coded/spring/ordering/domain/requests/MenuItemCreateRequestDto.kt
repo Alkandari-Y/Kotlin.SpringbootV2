@@ -11,13 +11,13 @@ import java.math.BigDecimal
 
 data class MenuCreateRequestDto(
     @field:NotBlank(message = "Menu Name is required")
-    @field:NotNull
     @field:Length(min = 3, message = "Menu Name must be between 3 and 6")
     val name: String,
-    @field:NotBlank(message = "Restaurant ID is required")
+
     @field:NotNull
     @field:Positive(message = "Restaurant ID be positive")
     val restaurantId: Long,
+    
     val price: BigDecimal,
 )
 
