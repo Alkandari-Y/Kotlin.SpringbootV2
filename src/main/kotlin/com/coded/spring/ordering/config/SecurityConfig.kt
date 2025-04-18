@@ -22,7 +22,7 @@ class SecurityConfig(
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf { it.disable() }
             .authorizeHttpRequests {
-                it.requestMatchers("/api/v1/profiles")
+                it.requestMatchers("/api/v1/menus")
                     .permitAll()
                     .anyRequest()
                     .authenticated()
