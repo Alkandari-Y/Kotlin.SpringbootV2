@@ -18,10 +18,6 @@ data class ProfileCreateRequestDto(
     @field:Size(min = 7, max = 12)
     @field:Pattern(regexp = "^\\d{7,12}$", message = "Phone number must be digits only and 7-12 characters long")
     val phoneNumber: String,
-
-    @field:NotNull
-    @field:Positive(message = "User ID must be positive")
-    val userId: Long
 )
 
 

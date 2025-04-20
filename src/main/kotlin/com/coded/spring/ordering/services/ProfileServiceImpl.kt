@@ -6,6 +6,7 @@ import com.coded.spring.ordering.domain.entities.ProfileEntity
 import com.coded.spring.ordering.repositories.ProfileRepository
 import com.coded.spring.ordering.repositories.UserRepository
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 
 @Service
@@ -17,11 +18,13 @@ class ProfileServiceImpl(
         return profileRepository.findAll()
     }
 
-    override fun createProfile(profile: ProfileCreateRequestDto): ProfileEntity {
-        val user = userRepository.findByIdOrNull(profile.userId)
-            ?: throw IllegalArgumentException("User with id ${profile.userId} doesn't exist")
+    override fun createProfile(profile: ProfileCreateRequestDto, userDetails: UserDetails): ProfileEntity {
+        val user = userRepository.findByUsername(userDetails.username)
 
-        val profileExists = profileRepository.findByUserId(profile.userId)
+        require(user != null) { "User with ${userDetails.username} doesn't exist" }
+        require(user.id != null) { "User with does not have id" }
+
+        val profileExists = profileRepository.findByUserId(user.id)
 
         if (profileExists != null) {
             throw IllegalArgumentException("User already has a profile")
