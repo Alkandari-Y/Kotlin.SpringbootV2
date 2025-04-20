@@ -10,6 +10,7 @@ import com.coded.spring.ordering.services.MenuService
 import com.coded.spring.ordering.services.RestaurantService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -21,7 +22,7 @@ class MenuApiController(
     @GetMapping
     fun getAll(): ResponseEntity<List<MenuEntity>> = ResponseEntity.ok(menuService.findAll())
 
-    @PostMapping
+    @PostMapping(path=["create"])
     fun createMenu(
         @RequestBody menuCreateRequestDto: MenuCreateRequestDto
     ): ResponseEntity<MenuEntity> {
