@@ -1,6 +1,5 @@
 package com.coded.spring.ordering.auth
 
-import com.coded.spring.ordering.services.JwtService
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.*
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
