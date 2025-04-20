@@ -18,13 +18,8 @@ data class OrderItemCreateRequestDto (
 
 data class OrderCreateRequestDto(
     @field:NotNull
-    @field:Positive(message = "User Id is must be positive")
-    val userId: Long,
-
-    @field:NotNull
     @field:Positive(message = "Restaurant Id is must be positive")
     val restaurantId: Long,
-
 
     val items: List<OrderItemCreateRequestDto>,
 )
@@ -35,5 +30,5 @@ fun OrderCreateRequestDto.toCreateDto(
     items: List<OrderItemCreateDto>,
 ) =  OrderCreateDto(user=user, restaurant=restaurant, items=items)
 
-fun OrderItemCreateRequestDto.toCreateDto(
-) = OrderItemCreateDto(itemId=itemId, quantity=quantity)
+fun OrderItemCreateRequestDto.toCreateDto()
+    = OrderItemCreateDto(itemId=itemId, quantity=quantity)

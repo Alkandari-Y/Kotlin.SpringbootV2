@@ -8,6 +8,8 @@ import com.coded.spring.ordering.services.UserService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
 
 
@@ -22,12 +24,18 @@ class OrderApiController(
     fun getAllOrders() = ResponseEntity.ok(orderService.getAllOrders())
 
     @PostMapping
-    fun createOrder(@Valid @RequestBody newOrderDto: OrderCreateRequestDto): ResponseEntity<Any> {
-        println(newOrderDto)
-        val user = userService.findById(newOrderDto.userId)
+    fun createOrder(
+        @Valid @RequestBody newOrderDto: OrderCreateRequestDto,
+        authentication: Authentication
+    ): ResponseEntity<Any> {
+        val userDetails = authentication.principal as UserDetails
+
+        val user = userService.findByUserName(userDetails.username)
             ?: return ResponseEntity(HttpStatus.BAD_REQUEST)
+
         val restaurant = restaurantService.findById(newOrderDto.restaurantId)
             ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+
         orderService.create(
             newOrderDto.toCreateDto(
                 user,
