@@ -24,8 +24,6 @@ class AuthApiController(
 ) {
     @PostMapping(path=["/login"])
     fun login(@Valid @RequestBody loginRequestDto: LoginRequestDto): ResponseEntity<*> {
-        println(loginRequestDto)
-        println("here ------------------")
         val authToken = UsernamePasswordAuthenticationToken(loginRequestDto.username, loginRequestDto.password)
         val authenticated = authenticationManager.authenticate(authToken)
 
@@ -37,13 +35,4 @@ class AuthApiController(
         val token = jwtService.generateToken(userDetails.username)
         return ResponseEntity(JwtResponseDto(token), HttpStatus.OK)
     }
-
-    @PostMapping(path=["/register"])
-    fun register() {
-
-    }
-
-
-
-
 }

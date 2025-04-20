@@ -22,7 +22,7 @@ class MenuApiController(
     @GetMapping
     fun getAll(): ResponseEntity<List<MenuEntity>> = ResponseEntity.ok(menuService.findAll())
 
-    @PostMapping(path=["create"])
+    @PostMapping(path=["/create"])
     fun createMenu(
         @RequestBody menuCreateRequestDto: MenuCreateRequestDto
     ): ResponseEntity<MenuEntity> {
@@ -32,7 +32,7 @@ class MenuApiController(
         return ResponseEntity(newMenu, HttpStatus.CREATED)
     }
 
-    @GetMapping(path=["details/{menuId}"])
+    @GetMapping(path=["/details/{menuId}"])
     fun getMenu(@PathVariable("menuId") menuId: Long): ResponseEntity<MenuDetailResponse> {
         val foundMenu = menuService.findById(menuId)
             ?: return ResponseEntity.notFound().build()
