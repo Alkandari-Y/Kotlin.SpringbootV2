@@ -2,17 +2,24 @@ package com.coded.spring.ordering.auth
 
 import com.coded.spring.ordering.auth.dtos.JwtResponseDto
 import com.coded.spring.ordering.auth.dtos.LoginRequestDto
+import com.coded.spring.ordering.users.UserService
+import com.coded.spring.ordering.users.dtos.UserCreateRequestDto
+import com.coded.spring.ordering.users.dtos.toDto
+import com.coded.spring.ordering.users.dtos.toEntity
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.security.crypto.password.PasswordEncoder
+
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -20,6 +27,8 @@ class AuthApiController(
     private val authenticationManager: AuthenticationManager,
     private val userDetailsService: UserDetailsService,
     private val jwtService: JwtService,
+    private val userService: UserService,
+    private val passwordEncoder: PasswordEncoder,
 ) {
     @PostMapping(path=["/login"])
     fun login(@Valid @RequestBody loginRequestDto: LoginRequestDto): ResponseEntity<*> {
@@ -32,6 +41,21 @@ class AuthApiController(
 
         val userDetails = userDetailsService.loadUserByUsername(loginRequestDto.username)
         val token = jwtService.generateToken(userDetails.username)
+        return ResponseEntity(JwtResponseDto(token), HttpStatus.OK)
+    }
+
+    @PostMapping(path=["/register"])
+    fun createUser(
+        @Valid @RequestBody user: UserCreateRequestDto
+    ): ResponseEntity<JwtResponseDto> {
+        val userEntity = userService.createUser(
+                user.copy(
+                    password = passwordEncoder.encode(
+                        user.password
+                    )
+                ).toEntity()
+            )
+        val token = jwtService.generateToken(userEntity.username)
         return ResponseEntity(JwtResponseDto(token), HttpStatus.OK)
     }
 }

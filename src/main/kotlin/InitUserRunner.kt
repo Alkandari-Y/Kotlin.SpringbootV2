@@ -1,10 +1,7 @@
-package com.coded.spring.ordering
-
 import com.coded.spring.ordering.domain.entities.UserEntity
 import com.coded.spring.ordering.repositories.UserRepository
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.security.crypto.password.PasswordEncoder
 
