@@ -71,9 +71,16 @@ class OrderApiTests
 
         val newOrder = orderPostResponse.body
         val itemsCount = newOrder?.items?.size
+
         assertNotNull(itemsCount)
         assertNotNull(orderPostResponse.body)
         assertEquals(200, orderPostResponse.statusCode.value())
+
+
+        assertEquals(1, newOrder?.id)
+        assertEquals(expectedOrder.restaurantId, newOrder?.restaurantId)
+        assertEquals(expectedOrder.items.size, itemsCount)
+        assertEquals(expectedOrder.items[0].quantity, newOrder?.items?.get(0)?.quantity)
 
     }
 
