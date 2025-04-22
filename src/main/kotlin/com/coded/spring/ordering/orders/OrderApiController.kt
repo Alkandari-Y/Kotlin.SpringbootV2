@@ -35,13 +35,13 @@ class OrderApiController(
         val restaurant = restaurantService.findById(newOrderDto.restaurantId)
             ?: return ResponseEntity(HttpStatus.NOT_FOUND)
 
-        orderService.create(
+        val order = orderService.create(
             newOrderDto.toCreateDto(
                 user,
                 restaurant,
                 newOrderDto.items.map { it.toCreateDto() }
             )
         )
-        return ResponseEntity(HttpStatus.OK)
+        return ResponseEntity(order, HttpStatus.OK)
     }
 }

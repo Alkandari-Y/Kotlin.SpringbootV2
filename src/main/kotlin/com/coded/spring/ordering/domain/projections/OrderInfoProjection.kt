@@ -4,22 +4,7 @@ import com.coded.spring.ordering.domain.entities.RestaurantEntity
 import com.coded.spring.ordering.domain.entities.UserEntity
 import java.math.BigDecimal
 
-data class ItemResponse(
-    val id: Long,
-    val name: String,
-)
 
-data class OrderItemResponse(
-    val item: ItemResponse,
-    val quantity: Int,
-)
-
-data class OrderInfoResponse(
-    val id: Long,
-    val user: UserEntity,
-    val restaurant: RestaurantEntity,
-    val items: List<OrderItemResponse>
-)
 
 interface OrderInfoProjection {
     val id: Long

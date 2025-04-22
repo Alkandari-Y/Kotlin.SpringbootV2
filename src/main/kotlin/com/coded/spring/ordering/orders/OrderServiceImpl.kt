@@ -1,10 +1,9 @@
 package com.coded.spring.ordering.orders
 
-import com.coded.spring.ordering.orders.dtos.OrderCreateDto
-import com.coded.spring.ordering.orders.dtos.toOrderEntity
 import com.coded.spring.ordering.domain.entities.OrderEntity
 import com.coded.spring.ordering.domain.entities.OrderItemEntity
 import com.coded.spring.ordering.domain.projections.OrderInfoProjection
+import com.coded.spring.ordering.orders.dtos.*
 import com.coded.spring.ordering.repositories.MenuRepository
 import com.coded.spring.ordering.repositories.OrderItemRepository
 import com.coded.spring.ordering.repositories.OrderRepository
@@ -23,7 +22,7 @@ class OrderServiceImpl(
     @Transactional
     override fun create(
         newOrder: OrderCreateDto
-    ) {
+    ): OrderCreateResponse {
         val menuIds = newOrder.items.map { it.itemId }
         val foundMenus = menuRepository.findAllByIdIn(menuIds)
 
@@ -34,16 +33,32 @@ class OrderServiceImpl(
         }
 
         val order: OrderEntity = orderRepository.save(newOrder.toOrderEntity())
-        val orderItems = newOrder.items.map { itemDto ->
-            val menu = foundMenus.find { menu -> menu.id == itemDto.itemId }
-                ?: throw IllegalStateException("Menu not found for id: ${itemDto.itemId}")
-            OrderItemEntity(
-                item = menu,
-                order = order,
-                quantity = itemDto.quantity
-            )
-        }
-        orderItemRepository.saveAll(orderItems)
+        val orderItems = orderItemRepository.saveAll(
+                newOrder.items.map { itemDto ->
+                val menu = foundMenus.find { menu -> menu.id == itemDto.itemId }
+                    ?: throw IllegalStateException("Menu not found for id: ${itemDto.itemId}")
+                OrderItemEntity(
+                    item = menu,
+                    order = order,
+                    quantity = itemDto.quantity
+                )
+            }
+        )
+
+        return OrderCreateResponse(
+            id = order.id!!,
+            userId = newOrder.user.id!!,
+            restaurantId = newOrder.restaurant.id!!,
+            items = orderItems.map { it ->
+                OrderItemResponse(
+                    id = it.id!!,
+                    item = foundMenus.find { menu -> it.item?.id == menu.id }!!.toItemResponse(),
+                    quantity = it.quantity!!
+                )
+            }
+        )
+
+
     }
 
     override fun findById(id: Long): OrderEntity? = orderRepository.findByIdOrNull(id)
