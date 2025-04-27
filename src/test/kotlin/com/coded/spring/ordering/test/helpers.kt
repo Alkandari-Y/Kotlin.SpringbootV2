@@ -1,4 +1,4 @@
-package com.coded.spring.ordering
+package com.coded.spring.ordering.test
 
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders

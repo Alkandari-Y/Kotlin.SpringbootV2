@@ -4,14 +4,12 @@ import com.coded.spring.ordering.auth.dtos.JwtResponseDto
 import com.coded.spring.ordering.auth.dtos.LoginRequestDto
 import com.coded.spring.ordering.users.UserService
 import com.coded.spring.ordering.users.dtos.UserCreateRequestDto
-import com.coded.spring.ordering.users.dtos.toDto
 import com.coded.spring.ordering.users.dtos.toEntity
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.web.bind.annotation.PostMapping
@@ -30,9 +28,12 @@ class AuthApiController(
     private val userService: UserService,
     private val passwordEncoder: PasswordEncoder,
 ) {
-    @PostMapping(path=["/login"])
+    @PostMapping(path = ["/login"])
     fun login(@Valid @RequestBody loginRequestDto: LoginRequestDto): ResponseEntity<*> {
-        val authToken = UsernamePasswordAuthenticationToken(loginRequestDto.username, loginRequestDto.password)
+        val authToken = UsernamePasswordAuthenticationToken(
+            loginRequestDto.username,
+            loginRequestDto.password
+        )
         val authenticated = authenticationManager.authenticate(authToken)
 
         if (authenticated.isAuthenticated.not()) {
@@ -44,17 +45,17 @@ class AuthApiController(
         return ResponseEntity(JwtResponseDto(token), HttpStatus.OK)
     }
 
-    @PostMapping(path=["/register"])
+    @PostMapping(path = ["/register"])
     fun createUser(
         @Valid @RequestBody user: UserCreateRequestDto
     ): ResponseEntity<JwtResponseDto> {
         val userEntity = userService.createUser(
-                user.copy(
-                    password = passwordEncoder.encode(
-                        user.password
-                    )
-                ).toEntity()
-            )
+            user.copy(
+                password = passwordEncoder.encode(
+                    user.password
+                )
+            ).toEntity()
+        )
         val token = jwtService.generateToken(userEntity.username)
         return ResponseEntity(JwtResponseDto(token), HttpStatus.OK)
     }

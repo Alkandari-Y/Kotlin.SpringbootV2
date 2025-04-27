@@ -1,4 +1,4 @@
-package com.coded.spring.ordering
+package com.coded.spring.ordering.test
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest

@@ -1,4 +1,4 @@
-package com.coded.spring.ordering
+package com.coded.spring.ordering.test
 
 import com.coded.spring.ordering.domain.entities.UserEntity
 import com.coded.spring.ordering.repositories.UserRepository
