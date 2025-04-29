@@ -9,6 +9,7 @@ import javax.crypto.SecretKey
 @Component
 class JwtService {
 
+    // use env vars for jwt token generation
     private val secretKey: SecretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256)
     private val expirationMs: Long = 1000 * 60 * 60
 

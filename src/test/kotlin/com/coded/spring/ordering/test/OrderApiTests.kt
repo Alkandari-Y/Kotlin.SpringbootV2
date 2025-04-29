@@ -74,7 +74,7 @@ class OrderApiTests
 
         assertNotNull(itemsCount)
         assertNotNull(orderPostResponse.body)
-        assertEquals(200, orderPostResponse.statusCode.value())
+        assertEquals(201, orderPostResponse.statusCode.value())
 
 
         assertEquals(1, newOrder?.id)

@@ -10,7 +10,7 @@ import com.coded.spring.ordering.repositories.OrderRepository
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-
+// feature switch on for discount on items based on env config
 @Service
 class OrderServiceImpl(
     private val orderRepository: OrderRepository,

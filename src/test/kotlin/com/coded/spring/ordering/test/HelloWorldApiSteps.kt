@@ -52,11 +52,6 @@ class HelloWorldApiSteps {
 //
     @Then("I get the Http status code should be {int}")
     fun getStatusCode200(statusCode: Int) {
-        assertEquals(HttpStatus.OK, response?.statusCode)
+        assertEquals(statusCode, response?.statusCode?.value())
     }
-//
-//    @And("the response body should be {string}")
-//    fun getHelloWorldResponse(body: String) {
-//        assertEquals("Hello World!", response?.body)
-//    }
 }

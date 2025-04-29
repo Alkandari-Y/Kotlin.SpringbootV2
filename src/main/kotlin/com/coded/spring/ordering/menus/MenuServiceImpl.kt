@@ -8,6 +8,7 @@ import com.coded.spring.ordering.domain.projections.MenuInfoSearchProjection
 import com.coded.spring.ordering.repositories.MenuRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+// cache the menu with hazzlecast
 
 @Service
 class MenuServiceImpl(
