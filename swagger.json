@@ -11,74 +11,19 @@
     }
   ],
   "paths": {
-    "/api/v1/users": {
-      "get": {
-        "tags": [
-          "user-api-controller"
-        ],
-        "operationId": "getUsers",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/UserResponseDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "user-api-controller"
-        ],
-        "operationId": "createUser",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserCreateRequestDto"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserResponseDto"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/v1/restaurants": {
       "get": {
         "tags": [
-          "restaurant-api-controller"
+          "Restaurants Api"
         ],
+        "summary": "Get all restaurants for authenticated users",
         "operationId": "getRestaurants",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Return all restaurants",
             "content": {
-              "*/*": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/RestaurantEntity"
-                  }
-                }
+              "application/json": {
+
               }
             }
           }
@@ -86,8 +31,9 @@
       },
       "post": {
         "tags": [
-          "restaurant-api-controller"
+          "Restaurants Api"
         ],
+        "summary": "Create a new restaurant for authenticated users",
         "operationId": "createRestaurant",
         "requestBody": {
           "content": {
@@ -100,10 +46,26 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "OK",
+          "400": {
+            "description": "Bad request",
             "content": {
-              "*/*": {
+              "application/json": {
+
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "201": {
+            "description": "Create a new restaurant",
+            "content": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/RestaurantEntity"
                 }
@@ -116,20 +78,16 @@
     "/api/v1/profiles": {
       "get": {
         "tags": [
-          "profile-api-controller"
+          "Profile API"
         ],
+        "summary": "Returns a list of all profiles for authenticated users",
         "operationId": "getProfiles",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Returns a list of all profiles",
             "content": {
-              "*/*": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProfileResponseDto"
-                  }
-                }
+              "application/json": {
+
               }
             }
           }
@@ -137,8 +95,9 @@
       },
       "post": {
         "tags": [
-          "profile-api-controller"
+          "Profile API"
         ],
+        "summary": "Authenticated users can create/update a profile",
         "operationId": "createProfile",
         "requestBody": {
           "content": {
@@ -151,12 +110,28 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "OK",
+          "400": {
+            "description": "Bad request",
             "content": {
-              "*/*": {
+              "application/json": {
+
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "201": {
+            "description": "Users can create or edits their profile",
+            "content": {
+              "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/ProfileResponseDto"
                 }
               }
             }
@@ -167,20 +142,16 @@
     "/api/v1/orders": {
       "get": {
         "tags": [
-          "order-api-controller"
+          "Order API"
         ],
+        "summary": "User get a list of all orders for authenticated users",
         "operationId": "getAllOrders",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Returns a list of all orders",
             "content": {
-              "*/*": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/OrderInfoProjection"
-                  }
-                }
+              "application/json": {
+
               }
             }
           }
@@ -188,8 +159,9 @@
       },
       "post": {
         "tags": [
-          "order-api-controller"
+          "Order API"
         ],
+        "summary": "Create a new order for authenticated users",
         "operationId": "createOrder",
         "requestBody": {
           "content": {
@@ -202,12 +174,28 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "OK",
+          "404": {
+            "description": "Not Found - Restaurant not found",
             "content": {
-              "*/*": {
+              "application/json": {
+
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "201": {
+            "description": "Successful Created a new order",
+            "content": {
+              "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/JwtResponseDto"
                 }
               }
             }
@@ -218,8 +206,9 @@
     "/api/v1/menus/create": {
       "post": {
         "tags": [
-          "menu-api-controller"
+          "Menu API"
         ],
+        "summary": "Create a new menu item",
         "operationId": "createMenu",
         "requestBody": {
           "content": {
@@ -233,12 +222,20 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Successfully created a new menu for authenticated users",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MenuEntity"
+                  "$ref": "#/components/schemas/MenuCreateRequestDto"
                 }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+
               }
             }
           }
@@ -248,9 +245,10 @@
     "/api/v1/auth/register": {
       "post": {
         "tags": [
-          "auth-api-controller"
+          "Auth Ppi"
         ],
-        "operationId": "createUser_1",
+        "summary": "Create a new user and receive a JWT token",
+        "operationId": "createUser",
         "requestBody": {
           "content": {
             "application/json": {
@@ -262,10 +260,18 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "OK",
+          "400": {
+            "description": "Bad request",
             "content": {
-              "*/*": {
+              "application/json": {
+
+              }
+            }
+          },
+          "200": {
+            "description": "Successful registration",
+            "content": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/JwtResponseDto"
                 }
@@ -278,8 +284,9 @@
     "/api/v1/auth/login": {
       "post": {
         "tags": [
-          "auth-api-controller"
+          "Auth Ppi"
         ],
+        "summary": "User login endpoint to receive JWT token",
         "operationId": "login",
         "requestBody": {
           "content": {
@@ -292,13 +299,48 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "OK",
+          "400": {
+            "description": "Bad request",
             "content": {
-              "*/*": {
+              "application/json": {
+
+              }
+            }
+          },
+          "200": {
+            "description": "Successful login",
+            "content": {
+              "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/JwtResponseDto"
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users": {
+      "get": {
+        "tags": [
+          "User API"
+        ],
+        "summary": "Get a list of all users for authenticated users",
+        "operationId": "getUsers",
+        "responses": {
+          "200": {
+            "description": "List all users",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+
               }
             }
           }
@@ -308,8 +350,9 @@
     "/api/v1/users/{id}": {
       "get": {
         "tags": [
-          "user-api-controller"
+          "User API"
         ],
+        "summary": "Get user details by id for  authenticated users",
         "operationId": "getUser",
         "parameters": [
           {
@@ -324,12 +367,28 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Return user details",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UserResponseDto"
                 }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+
               }
             }
           }
@@ -339,8 +398,9 @@
     "/api/v1/restaurants/{id}/menu": {
       "get": {
         "tags": [
-          "restaurant-api-controller"
+          "Restaurants Api"
         ],
+        "summary": "Get menu items for restaurant by id for authenticated users",
         "operationId": "getRestaurantMenu",
         "parameters": [
           {
@@ -354,16 +414,19 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK",
+          "404": {
+            "description": "Not Found",
             "content": {
-              "*/*": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/MenuBasicInfoProjection"
-                  }
-                }
+              "application/json": {
+
+              }
+            }
+          },
+          "200": {
+            "description": "Get restaurant's menu items",
+            "content": {
+              "application/json": {
+
               }
             }
           }
@@ -373,20 +436,16 @@
     "/api/v1/menus": {
       "get": {
         "tags": [
-          "menu-api-controller"
+          "Menu API"
         ],
+        "summary": "Receive a list of all menu items available",
         "operationId": "getAll",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Return a list of menu items",
             "content": {
-              "*/*": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/MenuEntity"
-                  }
-                }
+              "application/json": {
+
               }
             }
           }
@@ -396,8 +455,9 @@
     "/api/v1/menus/search": {
       "get": {
         "tags": [
-          "menu-api-controller"
+          "Menu API"
         ],
+        "summary": "Search all restaurants for menu items",
         "operationId": "search",
         "parameters": [
           {
@@ -419,15 +479,10 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Returns a menu list by item name or restaurant name for authenticated users",
             "content": {
-              "*/*": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/MenuInfoSearchProjection"
-                  }
-                }
+              "application/json": {
+
               }
             }
           }
@@ -437,8 +492,9 @@
     "/api/v1/menus/details/{menuId}": {
       "get": {
         "tags": [
-          "menu-api-controller"
+          "Menu API"
         ],
+        "summary": "Get a menu item by id",
         "operationId": "getMenu",
         "parameters": [
           {
@@ -453,12 +509,20 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Successfully returns a menu by id for authenticated users",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/MenuDetailResponse"
                 }
+              }
+            }
+          },
+          "404": {
+            "description": "Not request",
+            "content": {
+              "application/json": {
+
               }
             }
           }
@@ -468,17 +532,26 @@
     "/api/v1/hello-world": {
       "get": {
         "tags": [
-          "hello-world-api-controller"
+          "Hello world"
         ],
+        "summary": "Test endpoint that requires JWT token",
         "operationId": "helloWorld",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Generic hello world endpoint for authenticated users",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "type": "string"
                 }
+              }
+            }
+          },
+          "401": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+
               }
             }
           }
@@ -488,56 +561,6 @@
   },
   "components": {
     "schemas": {
-      "UserCreateRequestDto": {
-        "required": [
-          "email",
-          "name",
-          "password",
-          "username"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "username": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "maxLength": 2147483647,
-            "minLength": 6,
-            "pattern": "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).*",
-            "type": "string"
-          }
-        }
-      },
-      "UserResponseDto": {
-        "required": [
-          "email",
-          "id",
-          "name",
-          "username"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "email": {
-            "type": "string"
-          },
-          "username": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          }
-        }
-      },
       "RestaurantCreateRequestDto": {
         "required": [
           "name"
@@ -622,6 +645,35 @@
           }
         }
       },
+      "ProfileResponseDto": {
+        "required": [
+          "firstName",
+          "id",
+          "lastName",
+          "phoneNumber",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          }
+        }
+      },
       "OrderCreateRequestDto": {
         "required": [
           "items",
@@ -658,6 +710,17 @@
           }
         }
       },
+      "JwtResponseDto": {
+        "required": [
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      },
       "MenuCreateRequestDto": {
         "required": [
           "name",
@@ -678,13 +741,28 @@
           }
         }
       },
-      "JwtResponseDto": {
+      "UserCreateRequestDto": {
         "required": [
-          "token"
+          "email",
+          "name",
+          "password",
+          "username"
         ],
         "type": "object",
         "properties": {
-          "token": {
+          "name": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 2147483647,
+            "minLength": 6,
+            "pattern": "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).*",
             "type": "string"
           }
         }
@@ -708,122 +786,11 @@
           }
         }
       },
-      "MenuBasicInfoProjection": {
-        "required": [
-          "id",
-          "name",
-          "price"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "price": {
-            "type": "number"
-          }
-        }
-      },
-      "ProfileResponseDto": {
-        "required": [
-          "firstName",
-          "id",
-          "lastName",
-          "phoneNumber",
-          "userId"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "userId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "phoneNumber": {
-            "type": "string"
-          }
-        }
-      },
-      "MenuInfo": {
-        "required": [
-          "id",
-          "name",
-          "price"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "price": {
-            "type": "number"
-          }
-        }
-      },
-      "OrderInfoProjection": {
-        "required": [
-          "id",
-          "orderItems",
-          "restaurant",
-          "user"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "user": {
-            "$ref": "#/components/schemas/UserInfo"
-          },
-          "restaurant": {
-            "$ref": "#/components/schemas/RestaurantEntity"
-          },
-          "orderItems": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/OrderItemInfo"
-            }
-          }
-        }
-      },
-      "OrderItemInfo": {
-        "required": [
-          "item",
-          "quantity"
-        ],
-        "type": "object",
-        "properties": {
-          "quantity": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "item": {
-            "$ref": "#/components/schemas/MenuInfo"
-          }
-        }
-      },
-      "UserInfo": {
+      "UserResponseDto": {
         "required": [
           "email",
           "id",
+          "name",
           "username"
         ],
         "type": "object",
@@ -832,51 +799,14 @@
             "type": "integer",
             "format": "int64"
           },
+          "email": {
+            "type": "string"
+          },
           "username": {
             "type": "string"
           },
-          "email": {
-            "type": "string"
-          }
-        }
-      },
-      "MenuInfoSearchProjection": {
-        "required": [
-          "id",
-          "name",
-          "price",
-          "restaurant"
-        ],
-        "type": "object",
-        "properties": {
-          "restaurant": {
-            "$ref": "#/components/schemas/RestaurantInfoProjection"
-          },
           "name": {
             "type": "string"
-          },
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "price": {
-            "type": "number"
-          }
-        }
-      },
-      "RestaurantInfoProjection": {
-        "required": [
-          "id",
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "id": {
-            "type": "number",
-            "format": "float"
           }
         }
       },

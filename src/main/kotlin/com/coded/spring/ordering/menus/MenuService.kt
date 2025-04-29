@@ -7,7 +7,7 @@ import com.coded.spring.ordering.domain.projections.MenuInfoSearchProjection
 
 
 interface MenuService {
-    fun findAll(): List<MenuEntity>
+    fun findAll(): List<MenuDetailResponse>
     fun create(menuItem: MenuEntity): MenuEntity
     fun findById(id: Long): MenuDetailResponse?
     fun findAllIn(items: List<Long>): List<MenuEntity>

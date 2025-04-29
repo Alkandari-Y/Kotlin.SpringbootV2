@@ -4,6 +4,7 @@ import com.coded.spring.ordering.auth.dtos.JwtResponseDto
 import com.coded.spring.ordering.menus.dtos.MenuDetailResponse
 import com.coded.spring.ordering.domain.entities.MenuEntity
 import com.coded.spring.ordering.domain.entities.RestaurantEntity
+import com.coded.spring.ordering.domain.projections.MenuBasicInfoProjection
 import com.coded.spring.ordering.domain.projections.MenuInfoSearchProjection
 import com.coded.spring.ordering.menus.dtos.MenuCreateRequestDto
 import com.coded.spring.ordering.menus.dtos.toEntity
@@ -37,7 +38,7 @@ class MenuApiController(
             ])
     )
     @GetMapping
-    fun getAll(): ResponseEntity<List<MenuEntity>> = ResponseEntity.ok(menuService.findAll())
+    fun getAll(): ResponseEntity<List<MenuDetailResponse>> = ResponseEntity.ok(menuService.findAll())
 
 
     @Operation(summary = "Create a new menu item")

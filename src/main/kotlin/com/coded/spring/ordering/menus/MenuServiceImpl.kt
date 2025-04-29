@@ -1,5 +1,6 @@
 package com.coded.spring.ordering.menus
 
+import com.coded.spring.ordering.serverCache
 import com.coded.spring.ordering.menus.dtos.MenuDetailResponse
 import com.coded.spring.ordering.menus.dtos.toResponse
 import com.coded.spring.ordering.domain.entities.MenuEntity
@@ -8,13 +9,24 @@ import com.coded.spring.ordering.domain.projections.MenuInfoSearchProjection
 import com.coded.spring.ordering.repositories.MenuRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-// cache the menu with hazzlecast
 
 @Service
 class MenuServiceImpl(
     private val menuRepository: MenuRepository
 ) : MenuService {
-    override fun findAll(): List<MenuEntity> = menuRepository.findAll()
+    override fun findAll(): List<MenuDetailResponse> {
+        val cachedMenuItems = menuItemsCache["menuItems"]
+
+        return if (cachedMenuItems?.size == 0 || cachedMenuItems == null) {
+            println("caching menu items")
+            val menuItems = menuRepository.findAll().map { it.toResponse() }
+            menuItemsCache.put("menuItems", menuItems)
+            menuItems
+        } else {
+            println("retrieving ${cachedMenuItems.size} menu items")
+            menuItemsCache["menuItems"] ?: listOf()
+        }
+    }
 
     override fun create(menuItem: MenuEntity): MenuEntity {
         val menu = menuRepository.save(menuItem)
@@ -46,6 +58,6 @@ class MenuServiceImpl(
             else -> emptyList()
         }
     }
-
-
 }
+
+val menuItemsCache = serverCache.getMap<String, List<MenuDetailResponse>>("menuItems")
