@@ -9,10 +9,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.coded.spring</groupId>
-	<artifactId>Ordering</artifactId>
+	<artifactId>YousefTech</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Kotlin.SpringbootV2</name>
-	<description>Kotlin.SpringbootV2</description>
+	<packaging>pom</packaging>
+	<name>YousefTech</name>
+	<description>YousefTech</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -20,6 +21,12 @@
 	<developers>
 		<developer/>
 	</developers>
+
+
+	<modules>
+		<module>authentication</module>
+		<module>ordering</module>
+	</modules>
 	<scm>
 		<connection/>
 		<developerConnection/>
