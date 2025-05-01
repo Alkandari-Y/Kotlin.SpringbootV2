@@ -39,11 +39,11 @@ class HelloWorldApiController {
         @RequestAttribute("userId") userId: Long): String = "Hello World! $userId"
 
 
-    @Operation(summary = "Test endpoint that requires JWT token")
+    @Operation(summary = "Returns a welcome message or festive greeting")
     @ApiResponses(
         ApiResponse(
             responseCode = "200",
-            description = "Generic hello world endpoint for authenticated users",
+            description = "Returns a welcome message or greeting",
             content = [
                 Content(
                     schema = Schema(implementation = String::class),
