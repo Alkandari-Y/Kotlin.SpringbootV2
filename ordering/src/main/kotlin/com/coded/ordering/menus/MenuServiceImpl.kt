@@ -9,6 +9,7 @@ import com.coded.ordering.domain.projections.MenuInfoSearchProjection
 import com.coded.ordering.repositories.MenuRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import java.math.BigDecimal
 
 @Service
 class MenuServiceImpl(
@@ -16,10 +17,19 @@ class MenuServiceImpl(
 ) : MenuService {
     override fun findAll(): List<MenuDetailResponse> {
         val cachedMenuItems = menuItemsCache["menuItems"]
-
+        val discountActive = (System.getenv("discountActive") ?: "false") == "true"
         return if (cachedMenuItems?.size == 0 || cachedMenuItems == null) {
             println("caching menu items")
-            val menuItems = menuRepository.findAll().map { it.toResponse() }
+            val menuItems = menuRepository.findAll().map {
+                if (discountActive) {
+                    it.copy(
+                        price = it.price.subtract(
+                            it.price.multiply(BigDecimal.valueOf(0.2))
+                        )).toResponse()
+                } else {
+                    it.toResponse()
+                }
+            }
             menuItemsCache.put("menuItems", menuItems)
             menuItems
         } else {

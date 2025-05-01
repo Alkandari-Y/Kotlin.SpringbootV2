@@ -17,7 +17,7 @@ class SecurityConfig(
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf { it.disable() }
             .authorizeHttpRequests {
-                it.requestMatchers("/api/v1/menus", "/api-docs").permitAll()
+                it.requestMatchers("/api/v1/menus", "/api-docs", "/api/v1/welcome").permitAll()
                     .anyRequest().authenticated()
             }
             .sessionManagement {
